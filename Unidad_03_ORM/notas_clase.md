@@ -158,7 +158,7 @@ Para evitar la marea de ficheros xml se ha extendido el uso de Anotaciones Java 
 
 Inicialmente Hibernate creó sus propia anotaciones en el package *org.hibernate.annotations* pero han sido *java.lang.Deprecated* desde la versión 4 y ya no deben usarse. Las anotaciones que deben usarse actualmente son las del estándar de JPA que se encuentran en el package *javax.persistence*. Asimismo hay características propias de Hibernate que  JPA no contempla y hace que aún sea necesario usar alguna anotación del package *org.hibernate.annotations* (éstas aún no son deprecated).
 
-```java
+```JAVA
 @Entity
 @Table(name="equipos")
 public class Equipos implements java.io.Serializable {
@@ -201,10 +201,10 @@ public class Equipos implements java.io.Serializable {
 	//Aquí vendría la relación de get/set de cada propiedad
 ```
 
-* ```java @Entity:``` Se aplica a la clase e indica que esta clase Java es una entidad a persistir. Es anotación estándar de JPA.
-* ```java @Table(name=“equipos”):``` Se aplica a la clase e indica el nombre de la tabla de la base de datos donde se persistirá la clase. Opcional si la clase y la tabla se llaman igual. Es anotación estándar de JPA. 
-* ```java @Id:``` Se aplica a una propiedad Java e indica que este atributo es la clave primaria. Es anotación estándar de JPA. En nuestro ejemplo estamos indicando que la propiedad Java nombre es la clave primaria.
-* ```java @Column(name=“nombre”):``` Indica el nombre de la columna de la base de datos en la que se persistirá la propiedad. Es opcional si el nombre de la propiedad Java coincide con el de la columna de la base de datos. Es anotación estándar de JPA. En nuestro ejemplo estamos indicando que la propiedad Java nombre se persistirá en una columna llamada nombre.
+* ```@Entity:``` Se aplica a la clase e indica que esta clase Java es una entidad a persistir. Es anotación estándar de JPA.
+* ```@Table(name=“equipos”):``` Se aplica a la clase e indica el nombre de la tabla de la base de datos donde se persistirá la clase. Opcional si la clase y la tabla se llaman igual. Es anotación estándar de JPA. 
+* ```@Id:``` Se aplica a una propiedad Java e indica que este atributo es la clave primaria. Es anotación estándar de JPA. En nuestro ejemplo estamos indicando que la propiedad Java nombre es la clave primaria.
+* ```@Column(name=“nombre”):``` Indica el nombre de la columna de la base de datos en la que se persistirá la propiedad. Es opcional si el nombre de la propiedad Java coincide con el de la columna de la base de datos. Es anotación estándar de JPA. En nuestro ejemplo estamos indicando que la propiedad Java nombre se persistirá en una columna llamada nombre.
 * Se hace para cada columna...
 
 El acceso directo a las propiedades sin usar getters o setters es colocar la anotación sobre la propiedad en sí y no sobre el método get.
@@ -214,7 +214,7 @@ Una de las diferencias entre ambos mecanismos de mapeo es que hbm exige indicar 
 
 ## Uso de Hibernate
 
-La clase más utilizada es [```java org.hibernate.Session```](https://docs.jboss.org/hibernate/orm/5.3/javadocs/org/hibernate/Session.html). Contiene los métodos necesarios para leer, borrar o guardar entidades sobre la base de datos. Aún así, antes de utilizarla es necesario crear el objeto [SessionFactory](https://docs.jboss.org/hibernate/orm/5.3/javadocs/org/hibernate/SessionFactory.html)
+La clase más utilizada es [```org.hibernate.Session```](https://docs.jboss.org/hibernate/orm/5.3/javadocs/org/hibernate/Session.html). Contiene los métodos necesarios para leer, borrar o guardar entidades sobre la base de datos. Aún así, antes de utilizarla es necesario crear el objeto [SessionFactory](https://docs.jboss.org/hibernate/orm/5.3/javadocs/org/hibernate/SessionFactory.html)
 
 | Elemento       | Descripción                                                                    |
 | -------------  |:-------------------------------------------------------------------------------:|
