@@ -211,6 +211,76 @@ El acceso directo a las propiedades sin usar getters o setters es colocar la ano
 
 Una de las diferencias entre ambos mecanismos de mapeo es que hbm exige indicar todas las propiedades que se desea mapear, mientras que las anotaciones no hace falta. Éstas mapean todos los campos que tengan get/set.
 
+### Mapeo de Relaciones
+[Fuente](http://cursohibernate.es/doku.php?id=unidades:03_relaciones:00_start)
+
+#### Uno a uno (one-to-one)
+
+La relación uno a uno en Hibernate consiste simplemente en que un objeto tenga una referencia a otro objeto de forma que al persistirse el primer objeto también se persista el segundo.
+
+La relación puede ser unidireccional es decir que que la relación uno a uno va a ser en un único sentido o bidireccional, si va en ambos.
+
+#### Uno a muchos (many-to-one)
+
+La relación uno a muchos consiste simplemente en que un objeto padre tenga una _lista_ ordenada (o no, _set_) de otros objetos hijo de forma que al persistirse el objeto principal también se persista la lista de objetos hijo. 
+
+```java
+@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "Nombre_equipo")
+	public Equipos getEquipos() {
+		return this.equipos;
+	}
+
+@OneToMany(fetch = FetchType.LAZY, mappedBy = "jugadores")
+	public Set getEstadisticases() {
+		return this.estadisticases;
+
+```
+
+#### Muchos a muchos (many-to-many)
+
+La relación muchos a muchos consiste en que un objeto A tenga una lista de otros objetos B y también que el objeto B a su vez tenga la lista de objetos A. De forma que al persistirse cualquier objeto también se persista la lista de objetos que posee.
+
+#### Cascade
+
+Esta etiqueta indica qué debe hacer hibernate con las clases relacionadas cuando realizamos alguna acción con la clase principal.
+
+Es decir, si borramos la clase principal, ¿debería borrarse la clase relacionada?. La respuesta a ésta y otras preguntas depende de nuestro modelo de clases, por ello existen 11 valores distintos y deberemos elegir entre todos ellos.
+
+De todos los valores los realmente importantes, ya que incluyen la funcionalidad de trabajar con los objetos relacionados, son los 4 primeros:
+
+
+* __save-update__ Si se inserta o actualiza el objeto principal también se realizará la inserción o actualización en los objetos relacionados.
+* __delete__ Si se borra el objeto principal también se realizará el borrado en los objetos relacionados.
+* __delete-orphan__ Este atributo sólo se usa si el objeto relacionado es una colección. Indica que si en la colección del objeto principal eliminamos un elemento , al persistir el objeto principal deberemos borrar de la base de datos el elemento de la colección que habíamos eliminado.
+* __none__ No se realiza ninguna acción en los objetos relacionados al hacerlo sobre el principal.
+
+
+En estos casos, si se aplica cualquiera de los métodos _evict, lock, merge, refresh o replicate_ al objeto principal, también se aplica a los relacionados.
+
+* evict
+* lock
+* merge
+* refresh
+* replicate
+
+Los siguientes 2 valores son agrupaciones de los 9 anteriores:
+
+* __all__ Si se realiza cualquiera de las anteriores acciones sobre el objeto principal también se realizará sobre los objetos relacionados.
+* __all-delete-orphan__ Supone la unión de __all__ y __delete-orphan__
+
+Así que lo normal es que el atributo cascade tome alguno de los siguientes valores:
+
+* none
+* all
+* all-delete-orphan
+* save-update,evict,lock,merge,refresh,replicate
+
+
+#### Equals
+
+El método equals(Object) es de gran importancia al usar las colecciones en Java. En la mayoría de las clases de colecciones Java es importante decidir si dos objetos son iguales y para ello se usa el método equals(Object). En Hibernate tiene aun más importancia debido a que realmente dos objetos son iguales si hacen referencia a las misma fila de la base de datos aunque los objetos sean distintos.
+
 
 ## Uso de Hibernate
 
@@ -224,7 +294,25 @@ La clase más utilizada es [```org.hibernate.Session```](https://docs.jboss.org/
 | ConnectionProvider | Factoría de conexiones JDBC que abstrae la aplicación del Driver o DataSource. (opcional) |
 | TransactionFactory | Factoría de *Transaction* (opcional) |
 
+* La sessionFactory se implementa mediante un [Singleton](https://jarroba.com/patron-singleton-en-java-con-ejemplos/). TL:DR: Es un patrón en programación que permite una única instancia de un objeto en la app. Se aplica a sessionFactory por su consumo de recursos.
+
+### Programando con Hibernate
+
+Como ya se ha visto en los ejemplos, se basa en las clases _Session_ y _Transaction_, hacemos una recapitulación de los métodos más importantes:
+
+* ___beginTransaction()___ Define la transacción mediante la que se pueden llevar a cabo operaciones sobre la BD
+* ___save()___ Este método de la sesión (Interface ___Session___) se emplea para guardar el objeto (pasado como argumento).
+* ___update()___ Actualiza el objeto pasado como argumento en la BD. El objeto ha debido ser cargado mediante ___load()___ o ___get()___
+* ___delete()___ Elimina de la BD el objeto pasado como argumento. El objeto ha debido ser cargado mediante ___load()___ o ___get()___
+* ___commit()___ Se confirma (commit) la transacción actual (creada con ___beginTransaction()___)
+* ___close()___ Cierre de la sesión
+
+
 ## Hibernate Query Language (HQL)
+
+*Hibernate utiliza un lenguaje de consulta potente (HQL) que se parece a SQL. Sin embargo, comparado con SQL, HQL es completamente orientado a objetos y comprende nociones como herencia, polimorfismo y asociación.* [Fuente](https://docs.jboss.org/hibernate/orm/3.5/reference/es-ES/html/queryhql.html)
+
+* Para poder hacer las consultas mediante HQL en eclipse nos dirigimos a la perspectiva de Hibernate.
 
 ### Introducción a HQL
 El Hibernate Query Languaje (HQL) es el lenguaje de consultas que usa Hibernate para obtener los objetos desde la base de datos. Su principal particularidad es que las consultas se realizan sobre los objetos java que forman nuestro modelo de negocio, es decir, las entidades que se persisten en Hibernate. Ésto hace que HQL tenga las siguientes características:
@@ -235,6 +323,21 @@ Es posible tratar con las colecciones de Java y navegar entre los distintos obje
 
 En Hibernate las consultas HQL se ejecutan sobre el modelo de entidades definido en Hibernate, esto es, sobre las clases de negocio.
 Se podría ver que nuestro modelo de tablas en HQL son las clases Java y NO las tablas de la base de datos. Aunque esto no es técnicamente así. Debe notarse que al hacer ”SELECT columna FROM nombreTabla”, el ”nombreTabla” será una clase Java y ”columna” será una propiedad Java de dicha clase y nunca una tabla de la base de datos ni una columna de una tabla.
+
+### Consideraciones sobre HQL y su relación con SQL
+
+1. Ambos lenguajes son parecidos y comparten la indiferencia mayúsculas/minúsculas (Case insensitive)
+
+2. Ambos ejecutan consultas en la BD. En el caso de HQL, las consultas son en el formato de objetos que se "traducen" a consultas SQL estándar del DBMS de destino.
+
+3. SQL funciona con tablas y columnas para manipular los datos que contienen.
+
+4. HQL funciona con clases y sus propiedades que son después mapeadas a la estructura de tablas en el DBMS.
+
+5. HQL maneja conceptos como polimorfismo, herencia, asociación, etc. Es, de alguna forma, una traducción a objetos de SQL.
+
+6. SQL permite modificar la información mediante sentencias de DML (insert, update, delete). Es posible añadir nuevas tablas, vistas o procedimientos (procedures) en la DBMS. Asimismo, los permisos en los objetos añadidos pueden modificarse.
+
 
 ### La clase Query
 Una característica fundamental de cualquier ORM es la necesidad de leer los objetos de la base de datos.
@@ -251,4 +354,23 @@ Query query = session.createQuery("SELECT j FROM Jugadores j");
 ```
 
 Lanzar una consulta con Hibernate es bastante simple. Usando la session llamamos al método createQuery(String queryString) con la consulta en formato HQL y nos retorna un objeto *Query*. Después, sobre el objeto *Query* llamamos al método *list()* que nos retorna una lista de los objetos que ha retornado. Finalmente, se muestran por la consola los valores devueltos.
+
+
+## Clases persistentes
+
+Las clases presistentes son clases en una aplicación que implementan las entidades del problema empresarial (por ejemplo, Customer y Order en una aplicación de comercio electrónico). No se considera que todas las instancias de una clase persistente estén en estado persistente. Por ejemplo, una instancia puede ser transitoria o separada.
+
+Hibernate funciona mejor si estas clases siguen algunas reglas simples, también conocidas como el modelo de programación POJO (Plain Old Java Object). Sin embargo, ninguna de estas reglas son requerimientos rígidos. De hecho, Hibernate3 asume muy poco acerca de la naturaleza de sus objetos persistentes. Puede expresar un modelo de dominio en otras formas (por ejemplo, utilizando árboles de instancias de Map). [Fuente](https://docs.jboss.org/hibernate/orm/3.5/reference/es-ES/html/persistent-classes.html#persistent-classes-pojo)
+
+## Estados de los objetos
+
+* Transitorio (Transient): Un objeto estará en estado Transitorio cuando acabe de ser creado en Java mediante el operador new. Es decir cuando esté recién creado por nosotros. Este estado tiene la característica de que hibernate no sabe nada de nuestro objeto. Quizás el objeto ya este guardado en base de datos 1) o sea nuevo y tengamos que insertarlo.
+
+* Persistido (Persistent): Un objeto estará en estado Persistido cuando ya está guardado en la base de datos y además Hibernate también es consciente de ello. Fíjese la diferencia con el estado anterior en el que el objeto podía estar persistido pero Hibernate lo desconocía. Hibernate en ese caso guarda el objeto en la cache interna que posee. También es importante destacar que para una misma fila de la base de datos sólo puede haber un único objeto en estado Persistido.
+
+* Despegado (Detached): Este estado es similar al estado Transitorio sólo que se produce cuando cerramos la sesión mediante Session.close() o llamamos al método Session.evict(Object objeto) para el objeto que queremos pasar a este estado. En ese caso Hibernate vuelve a olvidar en qué estado se encontraban los objetos borrándolo de su cache interna.
+
+* Removido (Removed): A este estado pasan los objetos que se han borrado de la base de datos mediante el método delete().
+
+
 
