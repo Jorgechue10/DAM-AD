@@ -489,7 +489,7 @@ Es interesante establecer transacciones cuando se desea poder deshacer los cambi
 * Removido (Removed): A este estado pasan los objetos que se han borrado de la base de datos mediante el método delete().
 
 
-[logo]: http://lh6.ggpht.com/_NNjxeW9ewEc/TLSCVTaUc4I/AAAAAAAAKbg/JCxadzVSpz8/tmp9D36_thumb1_thumb3.jpg?imgmax=800 "Estados posibles de los objetos de Hibernate y relación entre ellos. Fuente: Fuente: http://lh6.ggpht.com/_NNjxeW9ewEc/TLSCVTaUc4I/AAAAAAAAKbg/JCxadzVSpz8/tmp9D36_thumb1_thumb3.jpg?imgmax=800"
+![alt-text](http://lh6.ggpht.com/_NNjxeW9ewEc/TLSCVTaUc4I/AAAAAAAAKbg/JCxadzVSpz8/tmp9D36_thumb1_thumb3.jpg?imgmax=800 "Estados posibles de los objetos de Hibernate y relación entre ellos. Fuente: Fuente: http://lh6.ggpht.com/_NNjxeW9ewEc/TLSCVTaUc4I/AAAAAAAAKbg/JCxadzVSpz8/tmp9D36_thumb1_thumb3.jpg?imgmax=800")
 
  
 ### Métodos de carga de los objetos (_Session_)
