@@ -99,7 +99,7 @@ class Cafeteria (extent Cafeterias􏰊)
 􏰠{
 	attribute string nombre;
 	attribute string direccion;
-	relationship Set<􏰜Sell􏰝> cervezasVendidas inverse Venta::cafeteria;	
+	relationship Set<􏰜Venta􏰝> cervezasVendidas inverse Venta::cafeteria;	
 }
 
 Class Cerveza (extent Cervezas) 
