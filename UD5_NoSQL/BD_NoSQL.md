@@ -246,6 +246,35 @@ Otra función alternativa a __find()__ es __findOne()__ que devuelve solo la pri
 
 * ```update()``` Para actualizar registros.
 
+* Un ejemplo:
+
+```javascript 
+
+db.coleccion.update(filtro, cambios, {
+    upsert: boolean,
+    multi: boolean
+  })
+
+// filtro especifica la condición de búsqueda, como en find.
+
+// cambios debe recoger los cambios que se desea hacer. En esta variable se indica cómo debe quedar el documento si se cumple lo especificado en el filtro. Si un campo no se incluye, se eliminará tras la modificación. Esto exige actuar con cautela.
+```
+
+#### multi y upsert
+
+*Por defecto MongoDB solo actualiza un documento a no ser que le indiquemos lo contrario. Es una manera de evitar errores. Para actualizar todos deberemos usar la opción multi que debe incluirse como se ve en el ejemplo anterior*
+
+*Además de la opción multi, tenemos disponible la opción upsert, que lo que hace es insertar el documento si este no existe. Es bastante parecido al comando save que hemos visto en las operaciones de inserción En este caso se comprueba toda la consulta en lugar de solo el _id.*  [Fuente](https://charlascylon.com/2013-07-18-tutorial-mongodb-operaciones-de-actualización-de)
+
+#### operadores Actualización
+
+* __$set__. Para actualizar un documento o varios con nuevas propiedades.
+* __$unset__. Para eliminar propiedades de un documento o varios.
+* __$inc__. Incrementa campos numéricos en la cantidad especificada.
+* __$rename__. Para renombrar campos de documentos.
+
+
+
 [Tutorial ES](https://charlascylon.com/2013-07-18-tutorial-mongodb-operaciones-de-actualización-de)
 
 ### Eliminaciones. _cruD_
@@ -256,10 +285,72 @@ Otra función alternativa a __find()__ es __findOne()__ que devuelve solo la pri
 
 ### Operaciones con funciones de agregado.
 
-#### Cadenas de texto.
-#### Funciones de resumen.
-#### Funciones aritméticas.
-#### Funciones sobre fechas.
+De forma similar a las funciones de agregación de las bases de datos relacionales, en MongoDB hay una suite de funciones de agregado (o resumen) para computar los datos obtenidos en consultas, etc. Son las siguientes.
+
+* __$sum__: suma (o incrementa)
+* __$avg__: calcula la media
+* __$min__: mínimo de los valores
+* __$max__: máximo
+* __$push__: Mete en un array un valor determinado
+* __$addToSet__: Mete en un array los valore que digamos, pero solo una vez
+* __$first__: obtiene el primer elemento del grupo, a menudo junto con sort
+* __$last__: obtiene el último elemento, a menudo junto con sort
+
+[Funciones de agregación](http://gpd.sip.ucm.es/rafa/docencia/nosql/Agregando.html)
+
+### Funciones para arrays:
+
+* __$each__: Utilizado junto con las ya vistas addToSet o push para indicar que se añaden varios elementos a un array.
+* __$pop__: Par eliminar el primer o último elemento de un array.
+* __$pull__: Para eliminar los valores del array que cumplan con el filtro especificado.
+
+
+### Funciones para cadenas de texto.
+
+Las funciones específicas para las cadenas de texto son las siguientes y su cometido queda bastante bien explicado por el propio nombre de la función.
+
+* __$concat__.  Concatena varias cadenas en una sola.
+* __$toUpper__. Convierte a mayúsculas.
+* __$toLower__. Convierte a minúsculas.
+* __$substr__.  Devuelve un substring de una cadena existente.
+* __$strcasecmp__. Compara cadenas sin tener en cuenta mayúsculas/minúsculas.
+
+
+### Funciones aritméticas.
+
+* __$abs__.
+* __$add__.
+* __$ceil__.
+* __$divide__.
+* __$exp__.
+* __$floor__.
+* __$ln__.
+* __$log__.
+* __$log10__.
+* __$mod__.
+* __$multiply__.
+* __$pow__.
+* __$sqrt__.
+* __$substract__.
+* __$trunc__.
+
+### Funciones sobre fechas.
+
+
+* __$datOfYear__.
+* __$dayOfMonth__.
+* __$dayOfWeek__.
+* __$yrear__.
+* __$month__.
+* __$week__.
+* __$hour__.
+* __$minute__.
+* __$second__.
+* __$millisecond__.
+* __$dateToString__.
+
+
+
 
 ### Notas sobre las comillas
 
