@@ -282,27 +282,29 @@ db.coleccion.update(filtro, cambios, {
 * ```remove()``` Para eliminar registros.
 
 
-
-### Operaciones con funciones de agregado.
-
-De forma similar a las funciones de agregación de las bases de datos relacionales, en MongoDB hay una suite de funciones de agregado (o resumen) para computar los datos obtenidos en consultas, etc. Son las siguientes.
+### Funciones de resumen
 
 * __$sum__: suma (o incrementa)
 * __$avg__: calcula la media
 * __$min__: mínimo de los valores
 * __$max__: máximo
-* __$push__: Mete en un array un valor determinado
-* __$addToSet__: Mete en un array los valore que digamos, pero solo una vez
-* __$first__: obtiene el primer elemento del grupo, a menudo junto con sort
-* __$last__: obtiene el último elemento, a menudo junto con sort
 
-[Funciones de agregación](http://gpd.sip.ucm.es/rafa/docencia/nosql/Agregando.html)
+
+### Operaciones con funciones de agregado.
+
+De forma similar a las funciones de agregación de las bases de datos relacionales, en MongoDB hay una suite de funciones de agregado para computar los datos obtenidos en consultas, etc. Son las siguientes.
+
+* [Funciones de agregación](http://gpd.sip.ucm.es/rafa/docencia/nosql/Agregando.html)
 
 ### Funciones para arrays:
 
 * __$each__: Utilizado junto con las ya vistas addToSet o push para indicar que se añaden varios elementos a un array.
 * __$pop__: Par eliminar el primer o último elemento de un array.
 * __$pull__: Para eliminar los valores del array que cumplan con el filtro especificado.
+* __$push__: Mete en un array un valor determinado
+* __$addToSet__: Mete en un array los valore que digamos, pero solo una vez
+* __$first__: obtiene el primer elemento del grupo, a menudo junto con sort
+* __$last__: obtiene el último elemento, a menudo junto con sort
 
 
 ### Funciones para cadenas de texto.
@@ -350,6 +352,22 @@ Las funciones específicas para las cadenas de texto son las siguientes y su com
 * __$dateToString__.
 
 
+La agregación trabaja con grupos de valores procedentes de múltiples documentos que se pueden agrupar a fin de obtener un resultado. En MongoDB se presentan 3 formas de llevar a cabo la agregación:
+
+* *Pipeline* o tubería. Se denomina así porque cada etapa de la agregación toma como entrada la salida de la anterior.
+* *Propósito único*
+* *Map-reduce*
+
+
+### Aggregation Pipeline
+
+Está dividida en varias etapas en las que se somete a una colección a diversas operaciones (cada una se considera una etapa), que modifican los datos hasta obtener el resultado deseado. Cada etapa tiene asociada una multiplicidad, lo que hace referencia al número de documentos que se obtienen como resultado tras la etapa en cuestión. Son similares a las cardinalidades de las relaciones de bases de datos relacionales:
+
+* 1:1 Se aplica a uno y se obtiene un documento.
+* 1:N Se aplica a un documento y se obtienen n.
+* N:1 Se aplica a n documentos y se obtiene 1.
+
+[Introducción a Aggregation Pipeline](https://charlascylon.com/2013-10-10-tutorial-mongodb-introduccion-aggregation-framework)
 
 
 ### Notas sobre las comillas
