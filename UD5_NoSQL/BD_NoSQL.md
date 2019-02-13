@@ -354,7 +354,7 @@ Las funciones específicas para las cadenas de texto son las siguientes y su com
 
 
 
-La agregación trabaja con grupos de valores procedentes de múltiples documentos que se pueden agrupar a fin de obtener un resultado. En MongoDB se presentan 3 formas de llevar a cabo la agregación:
+La agregación trabaja con grupos de valores procedentes de múltiples documentos que se pueden agrupar a fin de obtener un resultado. En MongoDB se presentan [3 formas](https://docs.mongodb.com/manual/aggregation/) de llevar a cabo la agregación:
 
 * *Pipeline* o tubería. Se denomina así porque cada etapa de la agregación toma como entrada la salida de la anterior.
 * *Propósito único*
