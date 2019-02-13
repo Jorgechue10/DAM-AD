@@ -320,36 +320,38 @@ Las funciones específicas para las cadenas de texto son las siguientes y su com
 
 ### Funciones aritméticas.
 
-* __$abs__.
-* __$add__.
-* __$ceil__.
-* __$divide__.
-* __$exp__.
-* __$floor__.
-* __$ln__.
-* __$log__.
-* __$log10__.
-* __$mod__.
-* __$multiply__.
-* __$pow__.
-* __$sqrt__.
-* __$substract__.
-* __$trunc__.
+* __$abs__. Para obtener el valor absoluto.
+* __$add__. Suma (en el caso de fechas añade milisegundos).
+* __$ceil__. Entero inferior más cercano.
+* __$divide__. División.
+* __$exp__. e^x
+* __$floor__. Entero superior más cercano.
+* __$ln__. Logaritmo neperiano.
+* __$log__. Devuelve el logaritmo para el número y la base indicados.
+* __$log10__. Logaritmo en base 10.
+* __$mod__. Módulo división entera.
+* __$multiply__. Producto.
+* __$pow__. Potencia x^y.
+* __$sqrt__. Raíz cuadrada.
+* __$substract__. Resta.
+* __$trunc__. Truncamiento
 
 ### Funciones sobre fechas.
 
 
-* __$datOfYear__.
-* __$dayOfMonth__.
-* __$dayOfWeek__.
-* __$yrear__.
-* __$month__.
-* __$week__.
-* __$hour__.
-* __$minute__.
-* __$second__.
-* __$millisecond__.
-* __$dateToString__.
+* __$dayOfYear__. Día del año.
+* __$dayOfMonth__. Día del mes.
+* __$dayOfWeek__. Día de la semana.
+* __$dateFromString__. Convierte una cadena en fecha.
+* __$dateToString__. Convierte una fecha en cadena (admite varios formatos).
+* __$year__. Devuelve de una fecha la parte correspondiente al año.
+* __$month__. Devuelve de una fecha la parte correspondiente al mes.
+* __$week__. Devuelve de una fecha la parte correspondiente a la semana.
+* __$hour__. Devuelve de una fecha la parte correspondiente a las horas.
+* __$minute__. Devuelve de una fecha la parte correspondiente a minutos.
+* __$second__. Devuelve de una fecha la parte correspondiente a segundos.
+* __$millisecond__. Devuelve de una fecha la parte correspondiente a milisegundos.
+
 
 
 La agregación trabaja con grupos de valores procedentes de múltiples documentos que se pueden agrupar a fin de obtener un resultado. En MongoDB se presentan 3 formas de llevar a cabo la agregación:
