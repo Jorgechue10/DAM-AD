@@ -386,6 +386,8 @@ Está dividida en varias etapas en las que se somete a una colección a diversas
   * Salto de elementos.
 * [$limit](https://docs.mongodb.com/manual/reference/operator/aggregation/limit/) n:1
   * Mostrar una cantidad determinada de resultados.
+* [$lookup](https://docs.mongodb.com/manual/reference/operator/aggregation/lookup/).
+  * Para poder establecer relaciones entre colecciones. Es parecido a un LEFT OUTER JOIN en sql.
 * [$unwind](https://docs.mongodb.com/manual/reference/operator/aggregation/unwind/) 1:n
   * Normalización de arrays.
 * [$out](https://docs.mongodb.com/manual/reference/operator/aggregation/out/) 1:1
