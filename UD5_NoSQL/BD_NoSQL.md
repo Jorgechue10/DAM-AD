@@ -305,6 +305,7 @@ De forma similar a las funciones de agregación de las bases de datos relacional
 * __$addToSet__: Mete en un array los valore que digamos, pero solo una vez
 * __$first__: obtiene el primer elemento del grupo, a menudo junto con sort
 * __$last__: obtiene el último elemento, a menudo junto con sort
+* __$elemMatch:__: Obtiene documentos que contienen campos array con al menos un elemento especificado como criterio de consulta.
 
 
 ### Funciones para cadenas de texto.
@@ -371,12 +372,62 @@ Está dividida en varias etapas en las que se somete a una colección a diversas
 
 [Introducción a Aggregation Pipeline](https://charlascylon.com/2013-10-10-tutorial-mongodb-introduccion-aggregation-framework)
 
+#### Etapas de aggregation pipeline (resumidas, para verlas todas; [Referencia EN](https://docs.mongodb.com/manual/reference/operator/aggregation-pipeline/))
+
+* [$project](https://docs.mongodb.com/manual/reference/operator/aggregation/project/) 1:1
+  * Cambia la forma del documento, la proyección.
+* [$match](https://docs.mongodb.com/manual/reference/operator/aggregation/match/) n:1
+  * Filtra los resultados.
+* [$group](https://docs.mongodb.com/manual/reference/operator/aggregation/group/) n:1
+  * Agrupa los documentos por campos comunes. También se usa para las funciones de resumen.
+* [$sort](https://docs.mongodb.com/manual/reference/operator/aggregation/sort/) 1:1
+  * Ordenación.
+* [$skip](https://docs.mongodb.com/manual/reference/operator/aggregation/skip/) n:1
+  * Salto de elementos.
+* [$limit](https://docs.mongodb.com/manual/reference/operator/aggregation/limit/) n:1
+  * Mostrar una cantidad determinada de resultados.
+* [$unwind](https://docs.mongodb.com/manual/reference/operator/aggregation/unwind/) 1:n
+  * Normalización de arrays.
+* [$out](https://docs.mongodb.com/manual/reference/operator/aggregation/out/) 1:1
+  * Para enviar el resultado a una salida concreta (P.Ej: insertarlo en un nuevo documento)
+
+#### Condiciones en la agregación:
+
+* [$cond](https://docs.mongodb.com/manual/reference/operator/aggregation/cond/). Es similar a la sentencia de control if-else. Recibe 3 elementos; la expresión a evaluar, sentencia si true, sentencia si false.
+
+* [ifNull](https://docs.mongodb.com/manual/reference/operator/aggregation/ifNull/). Recibe una expresión y otra de reemplazo. Evalua la primera y devuelve su valor si no es nulo, o la de reemplazo si lo es.
+
+
+#### Arrays y campos compuestos
+* [__$arrayElemAt__](https://docs.mongodb.com/manual/reference/operator/aggregation/arrayElemAt/) Para acceder a los elementos de un array presente en un documento. Recibe el campo array y el índice que se desea consultar.
+
+* [$concatArrays](https://docs.mongodb.com/manual/reference/operator/aggregation/concatArrays/). Recibe varios arrays independientes y los concatena en uno solo.
+* [$filter](https://docs.mongodb.com/manual/reference/operator/aggregation/filter/). Devuelve un array nuevo a partir de algunos elementos de otro array.
+* [$isArray](https://docs.mongodb.com/manual/reference/operator/aggregation/isArray/). Devuelve verdadero o falso si el operando recibido es o no array.
+* [$size](https://docs.mongodb.com/manual/reference/operator/aggregation/size/). Devuelve el tamaño del array que recibe.
+* [$slice](https://docs.mongodb.com/manual/reference/operator/aggregation/slice/). Devuelve un subconjunto del array que recibe.
+
+### Relaciones entre documentos   
+
+En muchos casos, el modelo de datos desnormalizado donde se almacenan datos relacionados en un mismo documento es adecuado. Sin embargo, hay ocasiones en las que tiene sentido almacenar la información en documentos separados (de distintas colecciones o bases de datos). En MongoDB esto se hace de [dos formas diferentes](https://docs.mongodb.com/manual/reference/database-references/):
+
+#### Referencias Manuales
+
+En este caso se almacena el campo *_id* de un documento en otro como referencia. Así, la aplicación puede ejecutar consultas para recuperar la información. Como se ve, es parecido al sistema de claves ajenas de las bases de datos relacionales.
+
+#### DBRefs
+
+En este caso, se genera referencias de un documento a otro mediante el campo *_id*, el nombre de la colección y de forma opcional el de la base de datos. Mediante estos datos, DBRefs permite enlazar los documentos de múltiples colecciones. Para gestionar las referencias, la aplicación debe hacer varias consultas a fin de recuperar los documentos referenciados. DBRefs proporcionan un formato y tipo común para rerpesentar las relaciones entre documentos, así como una semántica común para representar los enlaces entre documentos si estos han de interactuar con múltiples herramientas o frameworks. 
+
+* Nota de la documentación oficial: A menos que se tenga una buena razón para utilizar DBRefs, es preferible emplear referencias manuales.
+
 
 ### Notas sobre las comillas
 
 Al realizar alguna consulta de prueba siguiendo los ejemplos, probablemente se habrá visto que MongoDB guarda los elementos con comillas dobles en el identificador. Es decir que MongoDB guarda las duplas “firstName”:“Alex” o “age”:34. En las consultas, en cambio, no se han especificado dichas comillas. Esto es porque el motor JavaScript de MongoDB las añade. Esto facilita la escritura de consultas, que no son obligatorias.
 
 ## Recursos
+
 
 * [MongoDB Comandos básicos](https://jarriagadeveloper.wordpress.com/2016/01/19/mongodb-comandos-basicos/) 
 * [Más ejemplos Comandos](http://www.diegocalvo.es/tutorial-de-mongodb-con-ejemplos/) 
