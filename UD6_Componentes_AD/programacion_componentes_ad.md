@@ -35,3 +35,14 @@ La tecnología concreta de componentes que se verá aquí son los JavaBeans (bas
 ## Javabeans
 
 [Introducción a los JavaBeans](http://www.programandoapasitos.com/2015/11/acceso-datos-introduccion-los-javabeans.html)
+
+## DAO
+
+*Un __objeto de acceso a datos__ (en inglés, data access object, abreviado DAO) es un componente de software que suministra una interfaz común entre la aplicación y uno o más dispositivos de almacenamiento de datos, tales como una Base de datos o un archivo.* [Fuente](https://es.wikipedia.org/wiki/Objeto_de_acceso_a_datos)
+
+* [Intro DAO](http://www.programandoapasitos.com/2016/03/acceso-datos-bases-de-datos-orientadas.html)
+
+* [Patrón DAO](http://chuwiki.chuidiang.org/index.php?title=Patrón_DAO)
+
+
+## Factory
