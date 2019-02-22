@@ -44,5 +44,7 @@ La tecnología concreta de componentes que se verá aquí son los JavaBeans (bas
 
 * [Patrón DAO](http://chuwiki.chuidiang.org/index.php?title=Patrón_DAO)
 
+* [Ejemplo Spring DAO](http://chuwiki.chuidiang.org/index.php?title=Ejemplo_sencillo_con_SpringFramework_DAO)
+
 
 ## Factory
