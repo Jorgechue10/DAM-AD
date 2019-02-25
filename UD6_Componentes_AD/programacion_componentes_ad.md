@@ -48,3 +48,10 @@ La tecnología concreta de componentes que se verá aquí son los JavaBeans (bas
 
 
 ## Factory
+
+## MVC
+
+## Recursos
+
+* [Ejemplo DAO MVC](https://github.com/Agomezmo00/java_dao_mvc.git)
+* [Drivers Java MongoDB](https://repo1.maven.org/maven2/org/mongodb/mongo-java-driver/)
