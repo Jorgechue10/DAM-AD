@@ -41,8 +41,7 @@ Posteriormente realiza un método que los recupere mediante una consulta (criter
 
 2. (2.5 PUNTOS) Muestra mediante el uso de la Aggregation Pipeline de MongoDB sobre la colección de jugadores de la NBA los datos de la colección que cumplan lo siguiente:
 
-	* Nombre completo (firstName y lastName) de los jugadores en un solo campo.
-	* Índice de masa corporal del jugador
+	* Nombre completo (firstName y lastName) de los jugadores en un solo campo e Índice de masa corporal del jugador.
 	* Insertar el resultado en una nueva colección llamada, jugadores_masa_corporal.
 	* Exportar el contenido de la colección nueva a un fichero JSON.
 
